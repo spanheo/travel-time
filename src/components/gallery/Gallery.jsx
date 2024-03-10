@@ -1,0 +1,149 @@
+import { useState, useEffect, useCallback } from "react";
+import GalleryData from "../../data/GalleryData";
+import ReactPaginate from "react-paginate";
+import Images from "./Images";
+import ResetLocation from "../../helpers/ResetLocation";
+import "react-slideshow-image/dist/styles.css";
+
+const Gallery = () => {
+  const [itemOffset, setItemOffset] = useState(0);
+  const [endOffset, setEndoffset] = useState(itemOffset + 12);
+  const [currentBlogPosts, setCurrentBlogPosts] = useState(
+    [...GalleryData].slice(itemOffset, endOffset)
+  );
+  const [isOpen, setIsOpen] = useState(false);
+  const [targetImg, setTargetImg] = useState(0);
+
+  const handleNextClick = useCallback(() => {
+    setTargetImg((prevImg) => (prevImg + 1) % currentBlogPosts.length);
+  }, [currentBlogPosts.length]);
+
+  const handlePrevClick = useCallback(() => {
+    setTargetImg(
+      (prevImg) =>
+        (prevImg - 1 + currentBlogPosts.length) % currentBlogPosts.length
+    );
+  }, [currentBlogPosts.length]);
+
+  const handlePageClick = (e) => {
+    console.log(e);
+    const selected = e.selected;
+    if (selected) {
+      setItemOffset((selected * 12) % GalleryData.length);
+      ResetLocation();
+    }
+  };
+
+  const toggle = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const setModalImg = (imgIndex) => {
+    setTargetImg(imgIndex);
+  };
+
+  useEffect(() => {
+    document.title = "Gallery | Travel with Harsha";
+    setEndoffset(itemOffset + 12);
+    setCurrentBlogPosts([...GalleryData].slice(itemOffset, endOffset));
+  }, [setEndoffset, endOffset, itemOffset]);
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      const target = e.target;
+      const nextBtn = target.getAttribute("data-type") === "next";
+      const prevBtn = target.getAttribute("data-type") === "prev";
+
+      if (nextBtn) {
+        handleNextClick();
+      } else {
+        handlePrevClick();
+      }
+    };
+
+    window.addEventListener("click", handleClick);
+
+    return () => {
+      window.removeEventListener("click", handleClick);
+    };
+  }, [handleNextClick, handlePrevClick]);
+
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.key === "ArrowRight") {
+        handleNextClick();
+      } else if (e.key === "ArrowLeft") {
+        handlePrevClick();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [handleNextClick, handlePrevClick]);
+
+  return (
+    <article className="sm:col-span-5 md:col-span-4 min-h-screen srollbar-hide">
+      <Images
+        imagestoShow={currentBlogPosts}
+        toggle={toggle}
+        setModalImg={setModalImg}
+      />
+      <section className="flex flex-col items-center w-full">
+        <ReactPaginate
+          className="pagination"
+          breakLabel="..."
+          nextLabel="&#62;"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={3}
+          pageCount={Math.ceil(GalleryData.length / 12)}
+          previousLabel="&#60;"
+        />
+      </section>
+      {isOpen ? (
+        <section
+          className={`img-modal w-screen h-screen fixed z-30 top-0 left-0 flex justify-center bg-rgba(255, 255, 255, .15) backdrop-blur-sm ${
+            isOpen ? "flex" : "hidden"
+          }`}
+        >
+          <button
+            onClick={toggle}
+            className="absolute flex items-center justify-center z-40 text-2xl text-gray-200 text-bold p-2 bg-black rounded-full w-10 h-10 right-4 top-4 hover:-rotate-90 transition duration-500"
+          >
+            X
+          </button>
+          <button
+            onClick={handlePrevClick}
+            className="absolute flex items-center justify-center z-40 left-8 top-1/2 text-xl text-gray-200 text-bold p-6 bg-black rounded-full w-10 h-10 hover:bg-opacity-75 transition"
+            data-type="prev"
+          >
+            &lt;
+          </button>
+          <section className="slider-container relative w-4/5 flex items-center">
+            {currentBlogPosts.map((image, index) => (
+              <img
+                key={image.id}
+                className={`slider-slide ${
+                  targetImg === index ? "active" : "hidden"
+                } object-cover object-center w-full sm:h-2/3 md:h-3/4 `}
+                src={image.src}
+                alt={image.alt}
+              />
+            ))}
+          </section>
+          <button
+            onClick={handleNextClick}
+            className="absolute z-40 flex items-center justify-center right-8 top-1/2 text-xl text-gray-200 text-bold p-6 bg-black rounded-full w-10 h-10 hover:bg-opacity-75 transition"
+            data-type="next"
+          >
+            &gt;
+          </button>
+        </section>
+      ) : null}
+    </article>
+  );
+};
+
+export default Gallery;

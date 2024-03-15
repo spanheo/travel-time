@@ -64,8 +64,8 @@ import ImgSixtyThree from "../assets/images/gallery/image-63.JPG";
 import ImgSixtyFour from "../assets/images/gallery/image-64.JPG";
 import ImgSixtyFive from "../assets/images/gallery/image-65.JPG";
 import ImgSixtySix from "../assets/images/gallery/image-66.JPG";
-/*import ImgSixtySeven from "../assets/images/gallery/image-67.jpg";
-import ImgSixtyEight from "../assets/images/gallery/image-68.jpg";
+import ImgSixtySeven from "../assets/images/gallery/image-67.JPG";
+/*import ImgSixtyEight from "../assets/images/gallery/image-68.jpg";
 import ImgSixtyNine from "../assets/images/gallery/image-69.jpg";
 import ImgSeventy from "../assets/images/gallery/image-70.jpg";
 import ImgSeventyOne from "../assets/images/gallery/image-71.jpg";
@@ -283,13 +283,13 @@ const GalleryData = [
   },
   { id: 64, src: ImgSixtyFour, alt: "Georgia" },
   { id: 65, src: ImgSixtyFive, alt: "Georgia" },
-  /* { id: 66, src: ImgSixtySix, alt: "Georgia" },
+  { id: 66, src: ImgSixtySix, alt: "Georgia" },
   {
     id: 67,
     src: ImgSixtySeven,
     alt: "Georgia",
   },
-  {
+  /*{
     id: 68,
     src: ImgSixtyEight,
     alt: "Georgia",

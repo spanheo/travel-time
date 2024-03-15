@@ -283,7 +283,7 @@ const GalleryData = [
   },
   { id: 64, src: ImgSixtyFour, alt: "Georgia" },
   { id: 65, src: ImgSixtyFive, alt: "Georgia" },
-  { id: 66, src: ImgSixtySix, alt: "Georgia" },
+  /* { id: 66, src: ImgSixtySix, alt: "Georgia" },
   {
     id: 67,
     src: ImgSixtySeven,
@@ -349,7 +349,7 @@ const GalleryData = [
     src: ImgEightyThree,
     alt: "Georgia",
   },
-  /*{
+  {
     id: 84,
     src: ImgEightyFour,
     alt: "Georgia",

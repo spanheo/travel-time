@@ -23,7 +23,7 @@ const BlogPostsData = [
   {
     id: 2,
     src: ImgTwo,
-    title: "Californinan Bungalows",
+    title: "Laid back Californinan Bungalows",
     alt: "Californinan Bungalow",
     snippet:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi soluta veritatis debitis eveniet, sit ab quo, suscipit officiis, omnis animi nulla modi odio adipisci id recusandae quaerat minima illo. Nam? ",
